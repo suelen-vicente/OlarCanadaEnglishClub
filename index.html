@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Olar Canada English Club</title>
+    <meta
+      name="description"
+      content="Aulas de inglês interativas (site estático) com leitura em voz alta e exportação em PDF."
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container topbar__inner">
+        <div class="brand">
+          <div class="brand__title">Olar Canada English Club 🇨🇦</div>
+          <div class="brand__subtitle">Aprenda ingles para viajar sem perrengue</div>
+        </div>
+        <div class="topbar__actions">
+          <button id="quizToggle" class="btn btn--ghost" type="button" aria-pressed="false">
+            Modo quiz: Desligado
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container layout">
+      <section class="panel">
+        <h2 class="panel__title">Aulas</h2>
+        <p class="panel__hint">Selecione uma aula para ver o conteúdo.</p>
+        <div id="aulasGrid" class="grid" aria-label="Lista de aulas"></div>
+      </section>
+
+      <section class="panel panel--details" aria-live="polite">
+        <div class="details__header">
+          <h2 id="aulaTitulo" class="panel__title">Escolha uma aula</h2>
+          <p id="aulaDescricao" class="panel__hint"></p>
+        </div>
+
+        <div class="details__content">
+          <label class="label">Conteúdo</label>
+
+          <div
+            id="aulaConteudoPretty"
+            class="content"
+          >
+            <p class="content__placeholder">Selecione uma aula para ver o conteúdo aqui.</p>
+          </div>
+
+          <div id="flashcards" class="flashcards" hidden>
+            <div class="flashcards__top">
+              <span id="fcProgress" class="pill">0/0</span>
+              <span id="fcScore" class="pill pill--accent">✅ 0 • ❌ 0</span>
+            </div>
+
+            <div id="fcCard" class="flashcards__card" role="group" aria-label="Flashcard">
+              <div id="fcFront" class="flashcards__front"></div>
+              <div id="fcBack" class="flashcards__back" hidden></div>
+            </div>
+
+            <div class="flashcards__actions">
+              <button id="fcReveal" class="btn btn--primary" type="button">Ver resposta</button>
+              <button id="fcCorrect" class="btn" type="button" disabled>Acertei</button>
+              <button id="fcWrong" class="btn" type="button" disabled>Errei</button>
+              <button id="fcNext" class="btn" type="button" disabled>Próximo</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="details__actions">
+          <button id="speechToggle" class="btn btn--primary" type="button" disabled>
+            Ouvir
+          </button>
+          <button id="speechStop" class="btn" type="button" disabled>
+            Parar
+          </button>
+          <button id="downloadPdf" class="btn" type="button" disabled>
+            Baixar PDF
+          </button>
+        </div>
+
+        <p id="status" class="status" role="status"></p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer__inner">
+        <span>Dica: para áudio e PDF funcionarem melhor, rode com servidor local.</span>
+      </div>
+    </footer>
+
+    <!-- jsPDF (UMD): expõe window.jspdf.jsPDF -->
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+    <script defer src="./main.js"></script>
+  </body>
+</html>
