@@ -30,6 +30,10 @@ const el = {
   status: document.getElementById("status"),
 };
 
+const ICON_SPEAKER = `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+  <path fill="currentColor" d="M13 4.5a1 1 0 0 1 1.6.8v13.4a1 1 0 0 1-1.6.8L8.8 16H6a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h2.8L13 4.5Zm7.4 7.5a6.8 6.8 0 0 1-2.1 5 1 1 0 1 1-1.4-1.4 4.8 4.8 0 0 0 0-7.2 1 1 0 1 1 1.4-1.4 6.8 6.8 0 0 1 2.1 5Zm-3 .1a3.8 3.8 0 0 1-1.2 2.8 1 1 0 0 1-1.4-1.4 1.8 1.8 0 0 0 0-2.8 1 1 0 0 1 1.4-1.4 3.8 3.8 0 0 1 1.2 2.8Z"/>
+</svg>`;
+
 function getAulaSelecionada() {
   return aulas.find((a) => a.id === state.aulaSelecionadaId) ?? null;
 }
@@ -95,7 +99,9 @@ function renderPrettyLesson(aula) {
       const pt = typeof item === "string" ? "" : item.pt;
       if (!en) continue;
       parts.push(
-        `<li>${escapeHtml(en)}${
+        `<li><div class="phraseRow"><div class="phraseEn">${escapeHtml(en)}</div><button class="iconBtn" type="button" data-say="${escapeHtml(
+          en
+        )}" aria-label="Ouvir em inglês" title="Ouvir em inglês">${ICON_SPEAKER}</button></div>${
           pt ? `<div class="sub">${escapeHtml(pt)}</div>` : ""
         }</li>`
       );
@@ -436,6 +442,14 @@ el.fcReveal.addEventListener("click", revealCard);
 el.fcCorrect.addEventListener("click", () => answerCard(true));
 el.fcWrong.addEventListener("click", () => answerCard(false));
 el.fcNext.addEventListener("click", nextCard);
+el.aulaConteudoPretty.addEventListener("click", (e) => {
+  const target = e.target;
+  const button = target?.closest?.("button[data-say]");
+  if (!button) return;
+  const text = button.getAttribute("data-say");
+  if (!text) return;
+  speak(text);
+});
 
 function normalizeHeading(line) {
   return String(line).trim().toLowerCase();
